@@ -36,6 +36,7 @@ public class ApplicationConfig extends Application {
         resources.add(beans.service.MiembroFacadeREST.class);
         resources.add(beans.service.TipoUsuarioFacadeREST.class);
         resources.add(beans.service.UsuarioFacadeREST.class);
+        resources.add(cors.CORSResponseFilter.class);
     }
     
 }

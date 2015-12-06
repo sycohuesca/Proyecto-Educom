@@ -1,0 +1,25 @@
+<div ng-repeat="grupo in grupos.grupos" class="card small">
+    <div class="card-image waves-effect waves-block waves-light">
+        <img class="activator" src="images/office.jpg">
+    </div>
+    <div class="card-content">
+        <span class="card-title activator grey-text text-darken-4">{{grupo.grupo.nombre}}<i class="material-icons right">more_vert</i></span>
+        <br/>
+        <div class="divider"></div>
+        <br/>
+        <span ng-show="grupo.responsable">
+            <a  href="#modal1" class='btn-floating btn-medium waves-effect waves-light modal-trigger tooltipped' data-position='bottom' data-tooltip='Editar Miembros'><i class='material-icons'>recent_actors</i></a>
+            <a ng-click="grupos.editarGrupo(grupo.grupo.idGrupo)" class='btn-floating btn-medium waves-effect waves-light  tooltipped' data-position='bottom' data-tooltip='Editar Grupo'><i class='material-icons'>reorder</i></a>
+        </span>
+        <a ng-click="grupos.verMensajes()" class='btn-floating btn-medium waves-effect waves-light tooltipped' data-position='bottom' data-tooltip='Ver Mensajes'><i class='material-icons'>question_answer</i></a>
+    </div>
+    <div class="card-reveal">
+        <span class='card-title grey-text text-darken-4'><i class='material-icons left'>comment</i>{{grupo.grupo.nombre}}
+        <i class='material-icons right'>close</i></span>
+        <p>Autor: <span>{{grupo.grupo.idUsuarioSuperadministrador.nombre}}</span></p>
+        <p>Descripcion: <span>{{grupo.grupo.descripcion}}</span></p>
+        <p>El grupo es <span>{{grupo.privado}}</span></p>
+    </div>
+
+
+</div>

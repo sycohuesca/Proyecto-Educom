@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+
+    <title>Educom</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/materialize.min.css">
+    <!-- endbuild -->
+</head>
+
+<body ng-app="angularApp">
+
+    <nav>
+        <div class="nav-wrapper barraPrincipal">
+            <a href="#" class="brand-logo center">EduCom</a>
+
+
+            <ul class="right hide-on-med-and-down">
+
+                <a href="#" class="right"><i class="Medium material-icons left">power_settings_new</i>
+</a>
+                <div class="divider"></div>
+            </ul>
+
+            <ul id="slide-out" class="side-nav ">
+                <div class="divider"></div>
+                <a href="#" class="home collection-item">Grupos<i class="material-icons left">home</i></a>
+                <a href="#" class="configuracionUsuario-btn collection-item">Configurar Usuario<i class="material-icons left">settings</i>  </a>
+
+
+                <div class="divider"></div>
+                <a href="#" class=" nuevoGrupo collection-item">Crear Grupo<i class="material-icons left">add</i></a>
+                <div class="divider"></div>
+
+
+                <a href="#" class="entrarGrupo collection-item">Unirse a otro Grupo<i class="material-icons left">input</i></a>
+                <div class="divider"></div>
+                <a href="#" class="salirApp collection-item"><i class="material-icons left">power_settings_new</i>Salir</a>
+                <div class="divider"></div>
+            </ul>
+            <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+        </div>
+    </nav>
+
+    <div class="row">
+        <div id="panelLateral" class="col s12 m4 l3">
+            <ul class="hide-on-med-and-down">
+                <div class="card-panel">
+                    <h4 class="center-align">&iexcl; Bienvenido !</h4>
+                </div>
+
+                <ul class="collapsible" data-collapsible="accordion">
+
+                    <li class="collection-header">
+                        <div class="collapsible-header"><i class="material-icons">perm_identity</i>
+
+                            <strong class="nombrePanel"></strong></div>
+                        <div class="collapsible-body collection">
+                            <div class="collection-item"><i class="material-icons left">business</i> <span class="centronombrePanel">Colegionjsdid</span></div>
+                            <a href="#" class="configuracionUsuario-btn collection-item">Configurar Usuario<i class="material-icons left">settings</i></a>
+                            <a href="#" class="salirApp collection-item"><i class="material-icons left">power_settings_new</i>Salir</a>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="collapsible-header"><i class="material-icons">forum</i>Grupos</div>
+                        <div class="collapsible-body  collection">
+
+                            <a href="#" class=" nuevoGrupo collection-item">Crear Grupo<i class="material-icons left">add</i></a>
+
+                            <a href="#" class="entrarGrupo collection-item">Unirse a otro Grupo<i class="material-icons left">input</i></a>
+                            <div class="divider"></div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="collapsible-header"><i class="material-icons">settings</i>Administraci&oacute;n</div>
+                        <div class="collapsible-body collection">
+                            <a id="administarCentroA" href="#" class="collection-item">Administrar Centro<i class="material-icons left">business</i></a>
+                            <a id="administarUsuariosA" href="#!" class="collection-item">Administrar Usuarios<i class="material-icons left">perm_identity</i></a>
+                            <a id="administarGruposA" href="#!" class="collection-item">Administrar Grupos<i class="material-icons left">forum</i></a>
+                            <a id="administarTiposA" href="#!" class="collection-item">Administrar Tipos<i class="material-icons left">supervisor_account</i></a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header"><i class="material-icons">work</i>Logs</div>
+                        <div class="collapsible-body collection">
+                            <a href="#!" class="collection-item">Log de Grupo<i class="material-icons left">forum</i></a>
+                            <a href="#!" class="collection-item">Log de Miembros<i class="material-icons left">recent_actors</i></a>
+                            <a href="#!" class="collection-item">Log de Mensaje<i class="material-icons left">comment</i></a>
+                            <a href="#!" class="collection-item">Log de Tipos de Usuario<i class="material-icons left">supervisor_account</i></a>
+                        </div>
+                    </li>
+
+                </ul>
+            </ul>
+        </div>
+
+        <div id="texto" class="col s12 m12 l9">
+
+
+
+            <div ng-view></div>
+        </div>
+    </div>
+
+    <!-- Add your site or application content here -->
+
+
+
+
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="scripts/jquery.min.js"></script>
+    <script src="scripts/materialize.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.4.8/angular-route.min.js"></script>
+    <script src="https://code.angularjs.org/1.4.8/angular-cookies.min.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers.js"></script>
+
+    <!-- endbuild -->
+</body>
+
+</html>

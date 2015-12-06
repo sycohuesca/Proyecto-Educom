@@ -87,7 +87,7 @@ public class MiembroFacadeREST extends AbstractFacade<Miembro> {
 
     @GET
     @Override
-    @Produces({"application/xml", "application/json"})
+    @Produces({"application/json"})
     public List<Miembro> findAll() {
         return super.findAll();
     }
