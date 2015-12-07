@@ -22,13 +22,41 @@ angular
                 controller: 'getGruposCtrl',
                 controllerAs: 'grupos'
             })
-        .when('/mensajes', {
+            .when('/mensajes', {
                 templateUrl: 'views/mensajespanel.html',
                 controller: 'getMensajesCtrl',
                 controllerAs: 'mensajes'
             })
-            .otherwise({
-                redirectTo: '/'
-            });
+            .when('/centro', {
+                templateUrl: 'views/administrar/centro.html',
+                controller: 'getCentroCtrl',
+                controllerAs: 'centro'
+            })
+            .when('/grupos', {
+                templateUrl: 'views/administrar/grupos.html',
+              
+            })
+          .when('/tipos', {
+                templateUrl: 'views/administrar/tipos.html',
+              
+            })
+          .when('/usuarios', {
+                templateUrl: 'views/administrar/usuarios.html',
+              
+            })
+            .when('/administrar', {
+                templateUrl: 'views/usuariopanel.html',
+              
+            })
+
+        .otherwise({
+            redirectTo: '/'
+        });
     })
-            
+    .directive('materialCollapsible', function () {
+        return function () {
+            $('.collapsible').collapsible({
+                accordion: false
+            });
+        };
+    });

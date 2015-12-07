@@ -1,0 +1,59 @@
+<br>  
+<a id="regresar-btn" class="btn-floating btn-large waves-effect waves-light tooltipped" data-position="bottom"  data-tooltip="Regresar"><i class="material-icons"> fast_rewind</i></a> 
+  <div class="card-panel">
+
+                <div class="container">
+                    <blockquote>
+                        Aquí podrás editar  los grupos creados en el centro y añadir miembros.
+                    </blockquote>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col  s12 m8 l6">
+                                <label for="gruposSelect">
+                                    Escoge el grupo a modificar.</label>
+                                <select id="gruposSelect" data-placeholder="Escoge el grupo" class="chosen-select browser-default">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col l12">
+                                <label for="nombreGrupoA">Nombre del Grupo</label>
+                                <input id="nombreGrupoA" type="text" >
+                            </div>
+                            <div class="input-field col l12">   
+                                <label for="descripcionGrupoA">Descripci&oacute;n del Grupo</label>
+                                <input id="descripcionGrupoA" type="text" >
+                            </div>
+                            <p>
+
+                                <input class="with-gap" name="privadoCheckA" type="radio" id="privadoA" value="s"/>
+                                <label for="privadoA">Privado</label>
+                                <input class="with-gap" name="privadoCheckA" type="radio" id="publicoA" value="n"/>
+                                <label for="publicoA">Publico</label>
+                            </p>
+                            <p>     
+                                <input class="with-gap" name="borrablesCheckA" type="radio" id="borrableSiA" value="s"/>
+                                <label for="borrableSiA">Si Borrar</label>
+                                <input class="with-gap"  name="borrablesCheckA" type="radio" id="borrableNoA" value="n"/>
+                                <label for="borrableNoA">No Borrar</label>
+                            </p>
+                        </div>
+                        <div class="row">
+                            <div class="col  s12 m8 l6">
+                                <label>
+                                    Escoge el tipo de usuario</label>
+                                <select id="usuariosSelectA" data-placeholder="Escoge a los usuarios" multiple class="chosen-select browser-default">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="center-align input-field col l12">
+                                <button class="center btn waves-effect waves-light" id="btnNuevoGrupoA">Guardar
+                                    <i class="material-icons right">reorder</i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>   
+                </div>
+            </div>

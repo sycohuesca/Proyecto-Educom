@@ -1,0 +1,52 @@
+<br>  
+<a id="regresar-btn" class="btn-floating btn-large waves-effect waves-light tooltipped" data-position="bottom"  data-tooltip="Regresar"><i class="material-icons"> fast_rewind</i></a>   
+<div id="administrarUsuario">
+            <div class="card-panel">
+                <form class="container">
+                    <blockquote>
+                        Inserta un usuario directamente rellenando los datos y pulsando nuevo o busca un usuario existente para  resetear y enviarle su nuevo password de acceso.
+                    </blockquote>
+                    <div class="row">
+                        <div class="col  s12 m8 l6">
+                            <label>
+                                Escoge el usuario o crea uno nuevo.</label>
+                            <select id ="usuariosSelect"  class="chosen-select browser-default" data-placeholder="Escoge un Uduario">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="input-field col s12 m8 ">
+                            <input id="usuarioNombre" type="text" >
+                            <label  for="usuarioNombre">Nombre y Apellidos</label>
+                        </div>
+                        <div class="input-field col s12 m8">
+                            <input id="usuarioEmail" type="text" >
+                            <label  for="usuarioEmail">Email</label>
+                        </div>
+                    </div>
+                    <div class="row center-align">
+                        <a id="ResetearPassword" class="waves-effect waves-light btn"><i class="material-icons right">vpn_key</i>Reset Password</a> 
+                        <a id="nuevoUsuario" class="waves-effect waves-light btn"><i class="material-icons right">add</i>Nuevo</a>   
+          
+                    </div>
+                    <br>
+                    <blockquote>También se puede cargar una lista de usuarios a través de un archivo .csv</blockquote>
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span>Archivo</span>
+                            <input type="file">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                    <div class="row center-align">
+                        <a id="cargarUsuarios" class="waves-effect waves-light btn"><i class="material-icons right">add</i>Gargar</a>
+                    </div>
+
+
+                </form>
+
+            </div>
+        </div>
