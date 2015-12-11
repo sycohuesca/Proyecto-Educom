@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Mensaje.findAll", query = "SELECT m FROM Mensaje m"),
     @NamedQuery(name = "Mensaje.findByIdMensaje", query = "SELECT m FROM Mensaje m WHERE m.idMensaje = :idMensaje"),
+    @NamedQuery(name = "Mensaje.findAllByIdGrupo", query = "SELECT m FROM Mensaje m WHERE m.idGrupo.idGrupo = :idGrupo ORDER BY m.modificado DESC"),
     @NamedQuery(name = "Mensaje.findByTexto", query = "SELECT m FROM Mensaje m WHERE m.texto = :texto"),
     @NamedQuery(name = "Mensaje.findByFechaHora", query = "SELECT m FROM Mensaje m WHERE m.fechaHora = :fechaHora"),
     @NamedQuery(name = "Mensaje.findByEstado", query = "SELECT m FROM Mensaje m WHERE m.estado = :estado"),

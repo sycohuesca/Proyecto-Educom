@@ -11,6 +11,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -75,6 +76,20 @@ public class MiembroFacadeREST extends AbstractFacade<Miembro> {
     public void remove(@PathParam("id") PathSegment id) {
         beans.MiembroPK key = getPrimaryKey(id);
         super.remove(super.find(key));
+    }
+    
+      @GET
+    @Path("usuario={id}")
+    @Produces({"application/xml", "application/json"})
+    public List<Miembro> getFindAllByUsuario(@PathParam("id") Integer idUsuario) {
+        Query sql = em.createNamedQuery("Miembro.findByIdUsuario");
+        sql.setParameter("idUsuario", idUsuario);
+        List<Miembro> salida = sql.getResultList();
+        if (salida.isEmpty()) {
+            return null;
+        } else {
+            return salida;
+        }
     }
 
     @GET

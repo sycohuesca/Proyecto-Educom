@@ -6,6 +6,7 @@
 package beans.service;
 
 import beans.Grupo;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -37,6 +38,8 @@ public class GrupoFacadeREST extends AbstractFacade<Grupo> {
     @Override
     @Consumes({"application/xml", "application/json"})
     public void create(Grupo entity) {
+        entity.setIdGrupo(1);
+         entity.setFechaHoraCreacion(new Date());
         super.create(entity);
     }
 
@@ -44,6 +47,8 @@ public class GrupoFacadeREST extends AbstractFacade<Grupo> {
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
     public void edit(@PathParam("id") Integer id, Grupo entity) {
+        entity.setIdGrupo(id);
+        entity.setFechaHoraCreacion(new Date());
         super.edit(entity);
     }
 

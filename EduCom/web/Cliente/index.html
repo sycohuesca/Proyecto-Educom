@@ -52,11 +52,11 @@
         </div>
     </nav>
 
-    <div class="row">
+    <div class="row" ng-controller="getMenuLateralCtrl as menu">
         <div id="panelLateral" class="col s12 m4 l3">
             <ul class="hide-on-med-and-down">
                 <div class="card-panel">
-                    <h4 class="center-align">&iexcl; Bienvenido !</h4>
+                    <h4 class="center-align">¡ Bienvenido !</h4>
                 </div>
 
                 <ul class="collapsible" data-collapsible="accordion">
@@ -64,9 +64,9 @@
                     <li class="collection-header">
                         <div class="collapsible-header"><i class="material-icons">perm_identity</i>
 
-                            <strong class="nombrePanel"></strong></div>
+                            <strong class="nombrePanel">{{menu.nombre}}</strong></div>
                         <div class="collapsible-body collection">
-                            <div class="collection-item"><i class="material-icons left">business</i> <span class="centronombrePanel">Colegionjsdid</span></div>
+                            <div class="collection-item"><i class="material-icons left">business</i> <span class="centronombrePanel">{{menu.centro}}</span></div>
                             <a href="#/administrar" class="collection-item">Configurar Usuario<i class="material-icons left">settings</i></a>
                             <a href="#" class="salirApp collection-item"><i class="material-icons left">power_settings_new</i>Salir</a>
                         </div>

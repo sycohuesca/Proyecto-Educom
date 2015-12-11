@@ -1,10 +1,9 @@
 <br/>
-<a href="#/" class="regresar btn-floating btn-large waves-effect waves-light tooltipped" data-position="bottom" data-tooltip="Regresar"><i class="material-icons"> fast_rewind</i></a>
+<a href="#/" class="btn-floating btn-large waves-effect waves-light tooltipped" data-position="bottom" data-tooltip="Regresar"><i class="material-icons"> fast_rewind</i></a>
 <a ng-click="mensajes.nuevoMensaje()" class="btn-floating btn-large waves-effect waves-light tooltipped" ng- data-position="bottom" data-tooltip="Nuevo Mensaje"><i class="material-icons">mode_edit</i></a>
-<a id="salirGrupo" class="btn-floating btn-large waves-effect waves-light tooltipped" data-position="bottom" data-tooltip="Salir del Grupo"><i class="material-icons">delete</i></a>
+<a ng-click="mensajes.salirGrupo()" class="btn-floating btn-large waves-effect waves-light tooltipped" data-position="bottom" data-tooltip="Salir del Grupo"><i class="material-icons">delete</i></a>
 
 <ul class='collapsible popout' data-collapsible='accordion'>
-
     <li ng-repeat="mensaje in mensajes.mensajes" material-collapsible>
         <div class='collapsible-header'><i class='material-icons left'>perm_identity</i>{{mensaje.autor.nombre}}</div>
         <div class='collapsible-body'>
@@ -13,18 +12,18 @@
             <br/>
             <div class="divider"></div>
             <div class="btnMensajes">
-                <a ng-click="mensajes.nuevoMensaje()" class='btn-floating btn-small waves-effect waves-light  nuevoMensaje-btn tooltipped' data-position='bottom' data-tooltip='Nuevo Mensaje'><i class='material-icons'>mode_edit</i></a>
-                <a class='btn-floating btn-small waves-effect waves-light editarMensaje-btn tooltipped' data-position='bottom' data-tooltip='Editar Mensaje'><i class='material-icons'>reorder</i></a>
-                <a class='btn-floating btn-small waves-effect waves-light borrarMensaje-btn tooltipped' data-position='bottom' data-tooltip='Borrar Mensaje'><i class='material-icons'>delete</i></a>
+                <a ng-click="mensajes.nuevoMensaje()" class='btn-floating btn-small waves-effect waves-light   tooltipped' data-position='bottom' data-tooltip='Nuevo Mensaje'><i class='material-icons'>mode_edit</i></a>
+                <a ng-click="mensajes.editarMensaje(mensaje)" class='btn-floating btn-small waves-effect waves-light  tooltipped' data-position='bottom' data-tooltip='Editar Mensaje'><i class='material-icons'>reorder</i></a>
+                <a ng-click="mensajes.borrarMensaje(mensaje.idMensaje)" class='btn-floating btn-small waves-effect waves-light tooltipped' data-position='bottom' data-tooltip='Borrar Mensaje'><i class='material-icons'>delete</i></a>
             </div>
         </div>
     </li>
-
 </ul>
 
-<div id="modalNuevoMensaje" class="modal">
+<!-- Modales -->
+<div id="modalMensaje" class="modal">
     <div class="modal-content">
-        <h4>Nuevo Mensaje</h4>
+        <h4>Nuevo/Editar Mensaje</h4>
         <div class="divider"></div>
         <div class="container">
             <div class="row">
@@ -34,11 +33,52 @@
                 </div>
             </div>
             <div class="row center-align">
-                <button class="btn waves-effect waves-light">Enviar
+                <button class="btn waves-effect waves-light">Guardar
                     <i class="material-icons right">send</i>
                 </button>
             </div>
         </div>
+    </div>
+    <div class="modal-footer">
+        <a class="modal-action modal-close waves-effect waves-green btn-flat">Cerrar</a>
+    </div>
+</div>
+<div id="modalSalir" class="modal">
+    <div class="modal-content">
+        <h4>Salir del Grupo</h4>
+        <div class="divider"></div>
+        <div class="container">
+            <div class="row">
+                <p>Estas Seguro que quieres salir del grupo ?</p>
+            </div>
+            <div class="row center-align">
+                <button class="btn waves-effect waves-light" id="btnSalirGrupo">Salir
+                    <i class="material-icons right">delete</i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="modal-action modal-close waves-effect waves-green btn-flat">Cerrar</a>
+    </div>
+</div>
+<div id="modalBorrar" class="modal">
+    <div class="modal-content">
+        <h4>Borrar Mensaje</h4>
+        <div class="divider"></div>
+        <div class="container">
+            <div class="row">
+                <p>Estas seguro de borrar este mensaje ?</p>
+            </div>
+            <div class="row">
+                <div class=" center-align input-field col l12">
+                    <button class="btn waves-effect waves-light" id="btnBorrarMensaje">Borrar
+                        <i class="material-icons right">delete</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
     </div>
     <div class="modal-footer">
         <a class="modal-action modal-close waves-effect waves-green btn-flat">Cerrar</a>

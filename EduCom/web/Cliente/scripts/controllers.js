@@ -1,65 +1,121 @@
+
+
 'use strict';
 // Contoladores.
 angular.module('angularApp').controller('getGruposCtrl', getGrupos);
 angular.module('angularApp').controller('getMensajesCtrl', getMensajes);
 angular.module('angularApp').controller('getCentroCtrl', getCentro);
-
+angular.module('angularApp').controller('getMenuLateralCtrl', getMenuLateral);
 // Funciones
-function getGrupos($http, $window) {
+function getGrupos($window, $http, usuarioService, miFactoria) {
+    // variables
     var model = this;
-    model.entrar = true;
-    model.grupos = [];
-    $http.get("http://localhost:8080/EduCom/webresources/miembros").success(function (data) {
-        angular.forEach(data, function (value, key) {
-            value.grupo.privado == false ? value.privado = "Privado" : value.privado = "Público";
-            model.grupos.push(value);
-        })
+    model.fdatos={};
 
+    
+    usuarioService.getGrupos(miFactoria.usuario.idUsuario).success(function (data) {
+        model.grupos = data;
     });
-    model.verMensajes = function () {
+    // funciones
+    model.verMensajes = verMensajes;
+    model.modalEditarMiembros=modalEditarMiembros;
+    model.modalEditarGrupo = modalEditarGrupo;
+    model.modalNuevoGrupo = modalNuevoGrupo;
+    model.modalEntrarGrupo = modalEntrarGrupo;  
+    model.guardarGrupo=guardarGrupo;
+    
+   
+    function modalEditarGrupo (id) {
+        model.fdatos.idGrupo=id.idGrupo;
+        model.fdatos.nombre=id.nombre;
+        model.fdatos.descripcion=id.descripcion;
+        model.fdatos.privado=id.privado;
+        model.fdatos.idUsuarioSuperadministrador=id.idUsuarioSuperadministrador;
+        $('#grupoModal').openModal();
+    };
+    function modalNuevoGrupo  () {
+        model.fdatos.idGrupo="0";
+        model.fdatos.nombre="";
+        model.fdatos.descripcion="";
+         model.fdatos.privado="1";
+        $('#grupoModal').openModal();
+    };
+   function modalEntrarGrupo () {
+        $('#modalEntrarGrupo').openModal();
+
+    };
+
+    function verMensajes(id) {
+        miFactoria.grupoActivo = id;
         $window.location.href = "#/mensajes";
     }
-    model.editarMiembros = function (id) {
-        $('#modalGrupo2').openModal();
-        console.log(id)
-
+    function modalEditarMiembros(id){
+         $('#modalEditarMiembro').openModal();
     }
-    model.editarGrupo = function (id) {
-        alert(id);
-    }
-    model.modalNuevoGrupoBtn = function () {
-        $('#modalGrupo').openModal();
-        model.entrar = true;
-    }
-    model.modalEntrarGrupoBtn = function () {
-        $('#modalGrupo').openModal();
-        model.entrar = false;
-    }
-
+     function guardarGrupo(){
+        
+         if(model.fdatos.idGrupo==="0"){
+              model.fdatos.idUsuarioSuperadministrador=miFactoria.usuario;
+     usuarioService. newGrupo(model.fdatos).success(function(){
+         alert("Nuevo Grupo creado.");
+          $('#grupoModal').closeModal();
+         $window.location.href = "#/";
+        
+      });   
+         }
+         else {
+               usuarioService. editGrupo(model.fdatos).success(function(){
+                     alert("Grupo editado.");
+           $('#grupoModal').closeModal();
+          $window.location.href = "#/";
+               });
+             
+         }
+     
+     }
 
 }
 
-function getMensajes($http) {
-    $('textarea.materialize-textarea').characterCounter();
+function getMensajes(usuarioService, miFactoria) {
     var model = this;
-
-    $http.get("http://localhost:8080/EduCom/webresources/mensajes").success(function (data) {
+    $('textarea.materialize-textarea').characterCounter();
+    usuarioService.getMensajes(miFactoria.grupoActivo).success(function (data) {
         model.mensajes = data;
-
-
+        
     });
     model.nuevoMensaje = function () {
-        $('#modalNuevoMensaje').openModal();
+        $('#modalMensaje').openModal();
     }
 
-    this.mensajesModal = function () {
-        $('.collapsible').collapsible({
-            accordion: false
-        });
+    model.editarMensaje = function (id) {
+        $('#modalMensaje').openModal();
     }
+
+    model.borrarMensaje = function (id) {
+        $('#modalBorrar').openModal();
+    }
+    model.salirGrupo = function () {
+        $('#modalSalir').openModal();
+    }
+
 }
 
-function getCentro(){
+function getCentro() {
+
+
+}
+function getMenuLateral($window, usuarioService, miFactoria){
+    var model=this;
+    model.nombre="";
+    model.centro="";
+    
+    usuarioService.getUsuario(9).success(function (data){
+        miFactoria.usuario=data;
+        model.nombre=data.nombre;
+        model.centro=data.idCentro.nombre;
+        alert("Bienvenido "+data.nombre);
+    });
+    
     
     
 }

@@ -1,6 +1,6 @@
 'use strict';
 $(".button-collapse").sideNav();
-
+var idUsuario = 9;
 
 
 /**
@@ -15,7 +15,8 @@ angular
     .module('angularApp', [
     'ngRoute', 'ngCookies'
   ])
-    .config(function ($routeProvider) {
+
+.config(function ($routeProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: 'views/grupospanel.html',
@@ -34,19 +35,19 @@ angular
             })
             .when('/grupos', {
                 templateUrl: 'views/administrar/grupos.html',
-              
+
             })
-          .when('/tipos', {
+            .when('/tipos', {
                 templateUrl: 'views/administrar/tipos.html',
-              
+
             })
-          .when('/usuarios', {
+            .when('/usuarios', {
                 templateUrl: 'views/administrar/usuarios.html',
-              
+
             })
             .when('/administrar', {
                 templateUrl: 'views/usuariopanel.html',
-              
+
             })
 
         .otherwise({
@@ -59,4 +60,38 @@ angular
                 accordion: false
             });
         };
-    });
+    })
+    .service("usuarioService", function ($http) {
+        this.getUsuario = function (id) {
+            return $http.get("http://localhost:8080/EduCom/webresources/usuarios/" + id);
+        }
+        this.getGrupos = function (id) {
+            return $http.get("http://localhost:8080/EduCom/webresources/miembros/usuario=" + id);
+        }
+        this.getMensajes = function (id) {
+            return $http.get("http://localhost:8080/EduCom/webresources/mensajes/grupo=" + id);
+        }
+        this.newGrupo=function(grupo){
+            return  $http.post("http://localhost:8080/EduCom/webresources/grupos",grupo);
+        }
+         this.editGrupo=function(grupo){
+            return  $http.put("http://localhost:8080/EduCom/webresources/grupos/"+grupo.idGrupo,grupo);
+        }
+  
+       
+     
+       
+    })
+    .factory("miFactoria", function () {
+   
+        return {
+            usuario: "",
+            miembros:"",
+            grupoActivo: "",
+          
+
+        }
+
+
+
+    })

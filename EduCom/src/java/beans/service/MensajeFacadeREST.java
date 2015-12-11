@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -51,6 +52,20 @@ public class MensajeFacadeREST extends AbstractFacade<Mensaje> {
     @Path("{id}")
     public void remove(@PathParam("id") Integer id) {
         super.remove(super.find(id));
+    }
+    
+      @GET
+    @Path("grupo={id}")
+    @Produces({"application/xml", "application/json"})
+    public List<Mensaje> getFindAllByGrupo(@PathParam("id") Integer idGrupo) {
+        Query sql = em.createNamedQuery("Mensaje.findAllByIdGrupo");
+        sql.setParameter("idGrupo", idGrupo);
+        List<Mensaje> salida = sql.getResultList();
+        if (salida.isEmpty()) {
+            return null;
+        } else {
+            return salida;
+        }
     }
 
     @GET
