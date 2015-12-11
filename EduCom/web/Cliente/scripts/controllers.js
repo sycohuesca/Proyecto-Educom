@@ -23,6 +23,7 @@ function getGrupos($window, $http, usuarioService, miFactoria) {
     model.modalNuevoGrupo = modalNuevoGrupo;
     model.modalEntrarGrupo = modalEntrarGrupo;  
     model.guardarGrupo=guardarGrupo;
+    model.btnEntrarGrupo=btnEntrarGrupo;
     
    
     function modalEditarGrupo (id) {
@@ -41,6 +42,9 @@ function getGrupos($window, $http, usuarioService, miFactoria) {
         $('#grupoModal').openModal();
     };
    function modalEntrarGrupo () {
+       usuarioService.getGrupoByCentro(miFactoria.usuario.idCentro.idCentro).success(function(data){
+         model.entrar=data;  
+       });
         $('#modalEntrarGrupo').openModal();
 
     };
@@ -72,6 +76,23 @@ function getGrupos($window, $http, usuarioService, miFactoria) {
              
          }
      
+     }
+     function btnEntrarGrupo(){
+         var option=model.grupoEntrarSelect;
+         usuarioService.getGrupo(option).success(function(data){
+             if (data.privado){
+                alert("Es un grupo privado");
+                 
+             }
+             else {
+                 var miembro={grupo:data,usuario:miFactoria.usuario, responsable:"0"};
+             usuarioService.setMiembro(miembro).success(function(){
+                 alert("Es un grupo público y as sido añadido directamente.");
+             }); 
+             }
+            
+         });
+         
      }
 
 }

@@ -11,6 +11,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -63,6 +64,20 @@ public class GrupoFacadeREST extends AbstractFacade<Grupo> {
     @Produces({"application/xml", "application/json"})
     public Grupo find(@PathParam("id") Integer id) {
         return super.find(id);
+    }
+    
+       @GET
+    @Path("centro={id}")
+    @Produces({"application/json"})
+    public List<Grupo> getFindAllByIdCentro(@PathParam("id") Integer idCentro) {
+        Query sql = em.createNamedQuery("Grupo.findAllByIdCentro");
+        sql.setParameter("idCentro", idCentro);
+        List<Grupo> salida = sql.getResultList();
+        if (salida.isEmpty()) {
+            return null;
+        } else {
+            return salida;
+        }
     }
 
     @GET

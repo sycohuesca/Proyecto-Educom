@@ -77,6 +77,15 @@ angular
          this.editGrupo=function(grupo){
             return  $http.put("http://localhost:8080/EduCom/webresources/grupos/"+grupo.idGrupo,grupo);
         }
+          this.getGrupoByCentro=function(idCentro){
+            return  $http.get("http://localhost:8080/EduCom/webresources/grupos/centro="+idCentro);
+        }
+          this.setMiembro=function(miembro){
+            return  $http.put("http://localhost:8080/EduCom/webresources/miembros/miembrosPK;idUsuario="+miembro.usuario.idUsuario+";idGrupo="+miembro.grupo.idGrupo,miembro);
+        }
+           this.getGrupo=function(idGrupo){
+            return  $http.get("http://localhost:8080/EduCom/webresources/grupos/"+idGrupo);
+        }
   
        
      

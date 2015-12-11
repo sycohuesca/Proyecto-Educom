@@ -7,6 +7,7 @@ package beans.service;
 
 import beans.Miembro;
 import beans.MiembroPK;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -68,6 +69,9 @@ public class MiembroFacadeREST extends AbstractFacade<Miembro> {
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
     public void edit(@PathParam("id") PathSegment id, Miembro entity) {
+        beans.MiembroPK key=getPrimaryKey(id);
+        entity.setMiembroPK(key);
+        entity.setFechaHora(new Date());
         super.edit(entity);
     }
 

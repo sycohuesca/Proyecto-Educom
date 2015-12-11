@@ -106,11 +106,14 @@
             <div class="row">
                 <p>
                     <label class="active" for="entrarGrupos">Nombre del Grupo</label>
-                    <select class="chosen-select browser-default" id="entrarGrupos" required></select>
+                    <select ng-model="grupos.grupoEntrarSelect" class="chosen-select browser-default">
+                        <option ng-repeat="grupoLista in grupos.entrar"  ng-value="grupoLista.idGrupo" >{{grupoLista.nombre}}</option>
+                        
+                    </select>
                 </p>
             </div>
             <div class="row center-align">
-                <button class="btn waves-effect waves-light" id="btnEntrarGrupo">entrar
+                <button ng-click="grupos.btnEntrarGrupo()" class="btn waves-effect waves-light">entrar
                     <i class="material-icons right">send</i>
                 </button>
             </div>
