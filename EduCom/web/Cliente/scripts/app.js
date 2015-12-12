@@ -87,7 +87,18 @@ angular
             return  $http.get("http://localhost:8080/EduCom/webresources/grupos/"+idGrupo);
         }
   
-       
+            this.createMensaje=function(mensaje){
+            return  $http.post("http://localhost:8080/EduCom/webresources/mensajes/",mensaje);
+        }
+             this.editMensaje=function(mensaje){
+            return  $http.put("http://localhost:8080/EduCom/webresources/mensajes/"+mensaje.idMensaje,mensaje);
+        }
+            this.deleteMensaje=function(idMensaje){
+            return  $http.delete("http://localhost:8080/EduCom/webresources/mensajes/"+idMensaje);
+        }
+            this.exitGrupo=function(idUsuario, idGrupo){
+            return  $http.delete("http://localhost:8080/EduCom/webresources/miembros/miembroPK;idUsuario="+idUsuario+";idGrupo="+idGrupo);
+        }
      
        
     })
@@ -97,6 +108,7 @@ angular
             usuario: "",
             miembros:"",
             grupoActivo: "",
+            mensaje:""
           
 
         }

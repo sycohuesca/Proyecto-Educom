@@ -8,7 +8,7 @@
         <div class='collapsible-header'><i class='material-icons left'>perm_identity</i>{{mensaje.autor.nombre}}</div>
         <div class='collapsible-body'>
             <p>{{mensaje.texto}}</p>
-            <b class='right estado'>fsdfsdfsdfdsfsdffdsdsf </b>
+            <b class='right estado'>{{mensaje.estado}} {{mensajes.formatearFecha(mensaje.modificado)}}</b>
             <br/>
             <div class="divider"></div>
             <div class="btnMensajes">
@@ -25,19 +25,19 @@
     <div class="modal-content">
         <h4>Nuevo/Editar Mensaje</h4>
         <div class="divider"></div>
-        <div class="container">
+        <form ng-submit="mensajes.guardarMensaje()"  class="container">
             <div class="row">
                 <div class=" input-field col s12">
-                    <textarea id="textareaMensaje" class="materialize-textarea" length="250" spellcheck="true"></textarea>
-                    <label for="textareaMensaje">Texto</label>
+                    <textarea id="textareaMensaje" ng-model="mensajes.fdatos.texto" class="materialize-textarea" length="250" spellcheck="true" required></textarea>
+                    <label ng-class="mensajes.fdatos.texto ?'active':''" for="textareaMensaje">Texto</label>
                 </div>
             </div>
             <div class="row center-align">
-                <button class="btn waves-effect waves-light">Guardar
+                <button type="submit" class="btn waves-effect waves-light">Guardar
                     <i class="material-icons right">send</i>
                 </button>
             </div>
-        </div>
+        </form>
     </div>
     <div class="modal-footer">
         <a class="modal-action modal-close waves-effect waves-green btn-flat">Cerrar</a>
@@ -47,7 +47,7 @@
     <div class="modal-content">
         <h4>Salir del Grupo</h4>
         <div class="divider"></div>
-        <div class="container">
+        <form ng-submit="mensajes.salirGrupoBtn()" class="container">
             <div class="row">
                 <p>Estas Seguro que quieres salir del grupo ?</p>
             </div>
@@ -56,7 +56,7 @@
                     <i class="material-icons right">delete</i>
                 </button>
             </div>
-        </div>
+        </form>
     </div>
     <div class="modal-footer">
         <a class="modal-action modal-close waves-effect waves-green btn-flat">Cerrar</a>
@@ -72,7 +72,7 @@
             </div>
             <div class="row">
                 <div class=" center-align input-field col l12">
-                    <button class="btn waves-effect waves-light" id="btnBorrarMensaje">Borrar
+                    <button class="btn waves-effect waves-light" ng-click="mensajes.borrarMensajeBtn()">Borrar
                         <i class="material-icons right">delete</i>
                     </button>
                 </div>

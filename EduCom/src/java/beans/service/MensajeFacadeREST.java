@@ -6,6 +6,7 @@
 package beans.service;
 
 import beans.Mensaje;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -38,6 +39,10 @@ public class MensajeFacadeREST extends AbstractFacade<Mensaje> {
     @Override
     @Consumes({"application/xml", "application/json"})
     public void create(Mensaje entity) {
+        entity.setFechaHora(new Date());
+        entity.setModificado(new Date());
+        entity.setEstado("Sin modificar");
+        entity.setIdMensaje(1);
         super.create(entity);
     }
 
