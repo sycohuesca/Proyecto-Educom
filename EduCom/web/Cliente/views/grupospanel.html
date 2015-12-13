@@ -72,7 +72,7 @@
             <div class="row">
                 <p>
                     <label class="active" for="usuarioCentro">Escoge a los usuarios que quieres agregar:</label>
-                    <select ng-model="grupos.miembro.usuario" class="chosen-select browser-default" id="usuarioCentro">
+                    <select data-placeholder="Eligue un Usuario..." ng-model="grupos.miembro.usuario" class="chosen-select browser-default" id="usuarioCentro" required>
                         <option ng-repeat="usuario in grupos.usuariosSelect" ng-value="usuario.idUsuario">{{usuario.nombre}}</option>
                     </select>
                 </p>

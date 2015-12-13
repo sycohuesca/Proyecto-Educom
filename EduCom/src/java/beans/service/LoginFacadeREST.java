@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -46,11 +47,38 @@ public class LoginFacadeREST extends AbstractFacade<Login> {
     public void edit(@PathParam("id") Integer id, Login entity) {
         super.edit(entity);
     }
+      @PUT
+    @Path("usuario={id}/{pasViejo}/{pasNuevo}")
+    @Consumes({"application/xml", "application/json"})
+    public Login editPassword(@PathParam("id") Integer id, @PathParam("pasViejo") String pasViejo, @PathParam("pasNuevo") String pasNuevo) {
+        Login login = this.findByIdUsuario(id);
+        if (!login.getPassword().equals(pasViejo)) {
+            login = new Login();
+        } else {
+            login.setPassword(pasNuevo);
+            super.edit(login);
+        }
+
+        return login;
+    }
 
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Integer id) {
         super.remove(super.find(id));
+    }
+     @GET
+    @Path("idUsuario={idUsuario}")
+    @Produces({"application/json"})
+    public Login findByIdUsuario(@PathParam("idUsuario") Integer idUsuario) {
+        Query sql = em.createNamedQuery("Login.findByIdUsuario");
+        sql.setParameter("idUsuario", idUsuario);
+        List<Login> login = sql.getResultList();
+        if (login.isEmpty()) {
+            return new Login();
+        } else {
+            return login.get(0);
+        }
     }
 
     @GET

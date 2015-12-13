@@ -47,7 +47,8 @@ angular
             })
             .when('/administrar', {
                 templateUrl: 'views/usuariopanel.html',
-
+            controller: 'getUsuarioCtrl',
+                controllerAs: 'usuario'
             })
 
         .otherwise({
@@ -60,12 +61,8 @@ angular
             $('.collapsible').collapsible({
                 accordion: false
             });
-    }
+    };
     })
- 
-  
-   
-     
     
     .service("usuarioService", function ($http) {
         var url="http://localhost:8080/EduCom/webresources/";
@@ -112,6 +109,15 @@ angular
            this.getTipo=function(idUsuario, idGrupo){
             return  $http.get(url+"miembros/miembroPK;idUsuario="+idUsuario+";idGrupo="+idGrupo);
         }
+            this.getLogin=function(idUsuario){
+            return  $http.get(url+"logins/idUsuario="+idUsuario);
+        }
+             this.setUsuario=function(usuario){
+            return  $http.put(url+"usuarios/"+usuario.idUsuario,usuario);
+        }
+              this.setPassword=function(idUsuario,viejo,nuevo){
+            return  $http.put(url+"logins/usuario="+idUsuario + "/" + viejo + "/" + nuevo);
+        }
      
        
     })
@@ -120,12 +126,11 @@ angular
    
         return {
             usuario: "",
+            miembrosUsuario:"",
             miembros:"",
             grupoActivo: "",
             mensaje:"",
             tipo:""
-          
-
         }
 
 
