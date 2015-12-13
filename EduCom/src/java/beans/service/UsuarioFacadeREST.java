@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -58,6 +59,15 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     @Produces({"application/xml", "application/json"})
     public Usuario find(@PathParam("id") Integer id) {
         return super.find(id);
+    }
+     @GET
+    @Path("centro={id}")
+    @Produces({"application/xml","application/json"})
+    public List<Usuario> findAllByCentro(@PathParam("id") int idCentro){
+        Query sql = em.createNamedQuery("Usuario.findAllByCentro");
+        sql.setParameter("idCentro", idCentro);
+       List<Usuario> usuarios=sql.getResultList();
+       return usuarios;
     }
 
     @GET

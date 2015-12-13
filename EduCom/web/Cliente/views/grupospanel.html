@@ -72,22 +72,24 @@
             <div class="row">
                 <p>
                     <label class="active" for="usuarioCentro">Escoge a los usuarios que quieres agregar:</label>
-                    <select class="chosen-select browser-default" id="usuarioCentro"></select>
+                    <select ng-model="grupos.miembro.usuario" class="chosen-select browser-default" id="usuarioCentro">
+                        <option ng-repeat="usuario in grupos.usuariosSelect" ng-value="usuario.idUsuario">{{usuario.nombre}}</option>
+                    </select>
                 </p>
                 <p>Quieres que sea Responsable? </p>
                 <p>
-                    <input class="with-gap" name="responsablesCheck" type="radio" id="siResponsable" value="s" />
+                    <input class="with-gap" ng-model="grupos.miembro.responsable" name="responsablesCheck" type="radio" id="siResponsable" value="1" />
                     <label for="siResponsable">Si</label>
                 </p>
                 <p>
-                    <input class="with-gap" name="responsablesCheck" type="radio" id="noResponsable" value="n" />
+                    <input class="with-gap" ng-model="grupos.miembro.responsable" name="responsablesCheck" type="radio" id="noResponsable" value="0" />
                     <label for="noResponsable">No</label>
                     <br/>
                     <br/>
                 </p>
             </div>
             <div class="row center-align">
-                <button class="btn waves-effect waves-light" id="btnNuevoMiembro">Agregar
+                <button class="btn waves-effect waves-light" ng-click="grupos.guardarMiembro()">Agregar
                     <i class="material-icons right">send</i>
                 </button>
             </div>
@@ -105,9 +107,9 @@
         <div class="container">
             <div class="row">
                 <p>
-                    <label class="active" for="entrarGrupos">Nombre del Grupo</label>
-                    <select ng-model="grupos.grupoEntrarSelect" class="chosen-select browser-default">
-                        <option ng-repeat="grupoLista in grupos.entrar"  ng-value="grupoLista.idGrupo" >{{grupoLista.nombre}}</option>
+                    <label class="active">Nombre del Grupo</label>
+                    <select data-placeholder="Eligue un Grupo..." ng-model="grupos.grupoEntrarSelect" class="browser-default chosen-select" >
+                        <option ng-repeat="grupo in grupos.entrar" ng-value="grupo.idGrupo" mi-select>{{grupo.nombre}}</option>
                         
                     </select>
                 </p>

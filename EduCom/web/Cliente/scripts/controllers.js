@@ -2,28 +2,41 @@
 
 'use strict';
 // Contoladores.
+angular.module('angularApp').controller('getMenuLateralCtrl', getMenuLateral);
 angular.module('angularApp').controller('getGruposCtrl', getGrupos);
 angular.module('angularApp').controller('getMensajesCtrl', getMensajes);
 angular.module('angularApp').controller('getCentroCtrl', getCentro);
-angular.module('angularApp').controller('getMenuLateralCtrl', getMenuLateral);
+
 // Funciones
-function getGrupos($window, usuarioService, miFactoria) {
+function getGrupos($window, $timeout, usuarioService, miFactoria) {
     // variables
     var model = this;
     model.fdatos = {};
-
-
+    model.miembro={};
     usuarioService.getGrupos(miFactoria.usuario.idUsuario).success(function (data) {
         model.grupos = data;
     });
+      
     // funciones
-    model.verMensajes = verMensajes;
-    model.modalEditarMiembros = modalEditarMiembros;
-    model.modalEditarGrupo = modalEditarGrupo;
     model.modalNuevoGrupo = modalNuevoGrupo;
     model.modalEntrarGrupo = modalEntrarGrupo;
-    model.guardarGrupo = guardarGrupo;
     model.btnEntrarGrupo = btnEntrarGrupo;
+      
+    model.modalEditarMiembros = modalEditarMiembros;
+    model.modalEditarGrupo = modalEditarGrupo;   
+    model.guardarGrupo = guardarGrupo;
+    model.guardarMiembro = guardarMiembro;
+    
+    model.verMensajes = verMensajes;
+  
+    
+       function modalNuevoGrupo() {
+        model.fdatos.idGrupo = "0";
+        model.fdatos.nombre = "";
+        model.fdatos.descripcion = "";
+        model.fdatos.privado = "1";
+        $('#grupoModal').openModal();
+    }
 
 
     function modalEditarGrupo(id) {
@@ -34,25 +47,41 @@ function getGrupos($window, usuarioService, miFactoria) {
         model.fdatos.idUsuarioSuperadministrador = id.idUsuarioSuperadministrador;
         $('#grupoModal').openModal();
     }
-    function modalNuevoGrupo() {
-        model.fdatos.idGrupo = "0";
-        model.fdatos.nombre = "";
-        model.fdatos.descripcion = "";
-        model.fdatos.privado = "1";
-        $('#grupoModal').openModal();
-    }
+ 
     function modalEntrarGrupo() {
-        usuarioService.getGrupoByCentro(miFactoria.usuario.idCentro.idCentro).success(function (data) {
-            model.entrar = data;
+        usuarioService.getGruposByCentro(miFactoria.usuario.idCentro.idCentro).success(function (data) {
+            model.entrar = data; 
+              $timeout(function(){
+                  $(".chosen-select").chosen();
+        },300);
+              $('#modalEntrarGrupo').openModal(); 
         });
-        $('#modalEntrarGrupo').openModal();
-
+      
+    }
+    function guardarMiembro(){
+       var miembro={};
+       miembro.usuario={idUsuario:model.miembro.usuario};
+       miembro.grupo=miFactoria.grupoActivo;
+       miembro.responsable=model.miembro.responsable;
+        usuarioService.setMiembro(miembro).success(function (){
+            alert("Usuario modificado.");
+              $('#modalEditarMiembro').closeModal();
+                location.reload();
+        });   
     }
     function verMensajes(grupo) {
         miFactoria.grupoActivo = grupo;
         $window.location.href = "#/mensajes";
     }
-    function modalEditarMiembros(id) {
+    function modalEditarMiembros(grupo) {
+        model.miembro.responsable="0";
+        miFactoria.grupoActivo=grupo;
+         usuarioService.getUsuariosByCentro(miFactoria.usuario.idCentro.idCentro).success(function (data) {
+             model.usuariosSelect=data;
+         });
+             $timeout(function(){
+                  $(".chosen-select").chosen();
+        },300);
         $('#modalEditarMiembro').openModal();
     }
     function guardarGrupo() {
@@ -62,7 +91,7 @@ function getGrupos($window, usuarioService, miFactoria) {
             usuarioService.newGrupo(model.fdatos).success(function () {
                 alert("Nuevo Grupo creado.");
                 $('#grupoModal').closeModal();
-                $window.location.href = "#/";
+                location.reload();
 
             });
         }
@@ -70,32 +99,34 @@ function getGrupos($window, usuarioService, miFactoria) {
             usuarioService.editGrupo(model.fdatos).success(function () {
                 alert("Grupo editado.");
                 $('#grupoModal').closeModal();
-                $window.location.href = "#/";
+                location.reload();
             });
-
         }
-
     }
     function btnEntrarGrupo() {
         var option = model.grupoEntrarSelect;
         usuarioService.getGrupo(option).success(function (data) {
             if (data.privado) {
-                alert("Es un grupo privado");
-
+                var mensaje={};
+        mensaje.autor = miFactoria.usuario;
+        mensaje.idGrupo = data;
+        mensaje.texto = "El usuario "+miFactoria.usuario.nombre+" quiere unirse a este grupo.";
+        mensaje.idMensaje = "0";
+        usuarioService.createMensaje(mensaje).success(function () {
+              alert("Es un grupo privado, se ha enviado una solicitud para entrar en el grupo.");
+         });
+               
             }
             else {
                 var miembro = {grupo: data, usuario: miFactoria.usuario, responsable: "0"};
                 usuarioService.setMiembro(miembro).success(function () {
                     alert("Es un grupo público y as sido añadido directamente.");
                     $('#modalEntrarGrupo').closeModal();
-                    $window.location.href = "#/";
+                     location.reload();
                 });
             }
-
         });
-
     }
-
 }
 
 function getMensajes($window, usuarioService, miFactoria) {
@@ -140,7 +171,7 @@ function getMensajes($window, usuarioService, miFactoria) {
         usuarioService.deleteMensaje(miFactoria.mensaje).success(function () {
             alert("mensaje borrado");
             $('#modalBorrar').closeModal();
-            $window.location.href = "#/";
+             $window.location.href = "#/";
         });
     }
     function guardarMensaje() {
@@ -193,7 +224,13 @@ function getMenuLateral($window, usuarioService, miFactoria) {
         miFactoria.usuario = data;
         model.nombre = data.nombre;
         model.centro = data.idCentro.nombre;
-        alert("Bienvenido " + data.nombre);
+         $window.location.href = "#/home ";
+//        usuarioService.getTipo(data.idUsuario).success(function (data){
+//            miFactoria.tipo=data[0].idTipo;
+            
+//        });
+       // alert("Bienvenido " + data.nombre);
+      
     });
 
 

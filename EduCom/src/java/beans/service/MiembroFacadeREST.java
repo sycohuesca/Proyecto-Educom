@@ -9,6 +9,7 @@ import beans.Miembro;
 import beans.MiembroPK;
 import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -30,6 +31,10 @@ import javax.ws.rs.core.PathSegment;
 @Stateless
 @Path("miembros")
 public class MiembroFacadeREST extends AbstractFacade<Miembro> {
+       @EJB
+    private UsuarioFacadeREST usuarioFacadeREST;
+    @EJB
+    private GrupoFacadeREST grupoFacadeREST;
     @PersistenceContext(unitName = "EduComPU")
     private EntityManager em;
 
@@ -72,6 +77,8 @@ public class MiembroFacadeREST extends AbstractFacade<Miembro> {
         beans.MiembroPK key=getPrimaryKey(id);
         entity.setMiembroPK(key);
         entity.setFechaHora(new Date());
+          entity.setUsuario(usuarioFacadeREST.find(key.getIdUsuario()));
+         entity.setGrupo(grupoFacadeREST.find(key.getIdGrupo()));
         super.edit(entity);
     }
 

@@ -14,8 +14,11 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/materialize.min.css">
+    <link rel="stylesheet" href="styles/materialize.min.css"> 
+          <link href="styles/chosen.min.css" rel="stylesheet" type="text/css"/>
     <!-- endbuild -->
+    
+     
 </head>
 
 <body ng-app="angularApp">
@@ -73,14 +76,9 @@
                     </li>
 
                     <li>
-                        <div class="collapsible-header"><i class="material-icons">forum</i>Grupos</div>
-                        <div class="collapsible-body  collection">
-
-                            <a href="#" class=" nuevoGrupo collection-item">Crear Grupo<i class="material-icons left">add</i></a>
-
-                            <a href="#" class="entrarGrupo collection-item">Unirse a otro Grupo<i class="material-icons left">input</i></a>
-                            <div class="divider"></div>
-                        </div>
+                        <div class="collapsible-header">
+                          <a class="menuEnlace" href="#/" class="entrarGrupo collection-item">Grupos<i class="material-icons left">forum</i></a>
+                        </div>                      
                     </li>
 
                     <li>
@@ -92,15 +90,7 @@
                             <a id="administarTiposA" href="#/tipos" class="collection-item">Administrar Tipos<i class="material-icons left">supervisor_account</i></a>
                         </div>
                     </li>
-                    <li>
-                        <div class="collapsible-header"><i class="material-icons">work</i>Logs</div>
-                        <div class="collapsible-body collection">
-                            <a href="#!" class="collection-item">Log de Grupo<i class="material-icons left">forum</i></a>
-                            <a href="#!" class="collection-item">Log de Miembros<i class="material-icons left">recent_actors</i></a>
-                            <a href="#!" class="collection-item">Log de Mensaje<i class="material-icons left">comment</i></a>
-                            <a href="#!" class="collection-item">Log de Tipos de Usuario<i class="material-icons left">supervisor_account</i></a>
-                        </div>
-                    </li>
+                  
 
                 </ul>
             </ul>
@@ -114,23 +104,15 @@
         </div>
     </div>
 
-    <!-- Add your site or application content here -->
-
-
-
-
-
-    <!-- build:js(.) scripts/vendor.js -->
-    <!-- bower:js -->
+ <!-- Scripts de terceros -->
     <script src="scripts/jquery.min.js"></script>
     <script src="scripts/materialize.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <script src="https://code.angularjs.org/1.4.8/angular-route.min.js"></script>
-    <script src="https://code.angularjs.org/1.4.8/angular-cookies.min.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
-
-    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/angular.min.js"></script>
+    <script src="scripts/angular-route.min.js"></script>
+    <script src="scripts/angular-cookies.min.js"></script>
+    <script src="scripts/chosen.jquery.min.js"></script>
+    <!-- Mis Sacripts-->
+   
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers.js"></script>
 
