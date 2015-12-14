@@ -40,6 +40,15 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     public void create(Usuario entity) {
         super.create(entity);
     }
+      @POST
+    @Path("nombre")
+    @Produces({"application/xml","application/json"})
+    public Usuario findByNombre (Usuario entity){
+        Query sql = em.createNamedQuery("Usuario.findByNombre");
+        sql.setParameter("nombre", entity.getNombre());
+      List<Usuario> usuarios=sql.getResultList();
+       return usuarios.get(0);       
+     }
 
     @PUT
     @Path("{id}")

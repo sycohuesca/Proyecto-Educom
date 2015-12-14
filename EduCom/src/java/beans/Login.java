@@ -6,6 +6,13 @@
 package beans;
 
 import java.io.Serializable;
+import java.util.Properties;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,10 +36,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "login")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Login.findAll", query = "SELECT l FROM Login l"),
+   @NamedQuery(name = "Login.findAll", query = "SELECT l FROM Login l"),
+    @NamedQuery(name = "Login.findByEntrar", query = "SELECT l FROM Login l WHERE l.user = :user and l.password= :password"),
     @NamedQuery(name = "Login.findByIdLogin", query = "SELECT l FROM Login l WHERE l.idLogin = :idLogin"),
-    @NamedQuery(name = "Login.findByIdUsuario", query = "SELECT l FROM Login l WHERE l.idUsuario.idUsuario = :idUsuario"),
     @NamedQuery(name = "Login.findByUser", query = "SELECT l FROM Login l WHERE l.user = :user"),
+    @NamedQuery(name = "Login.findByIdUsuario", query = "SELECT l FROM Login l WHERE l.idUsuario.idUsuario = :idUsuario"),
     @NamedQuery(name = "Login.findByPassword", query = "SELECT l FROM Login l WHERE l.password = :password")})
 public class Login implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -124,5 +132,50 @@ public class Login implements Serializable {
     public String toString() {
         return "beans.Login[ idLogin=" + idLogin + " ]";
     }
-    
+       public String generarPassword() {
+        String key = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        String pswd = "";
+
+        for (int i = 0; i < 8; i++) {
+            pswd += (key.charAt((int) (Math.random() * key.length())));
+        }
+
+        return pswd;
+    }
+
+    public void mandaMail(String destinatario, String pass) throws MessagingException {
+   
+        //
+        Properties props = new Properties();
+        // Nombre del host de correo
+        props.setProperty("mail.smtp.host", "smtp.gmail.com");//para gmail smtp.gmail.com
+        // TLS si está disponible
+        //props.setProperty("mail.smtp.starttls.enable", "true");
+        props.setProperty("mail.smtp.starttls.enable", "true");
+        // Puerto de gmail para envio de correos
+        props.setProperty("mail.smtp.port", "587");
+        // Nombre del usuario
+        props.setProperty("mail.smtp.user", "ajlucea@gmail.com");
+        // Si requiere o no usuario y password para conectarse.
+        props.setProperty("mail.smtp.auth", "true");
+        Session session = Session.getDefaultInstance(props);
+        session.setDebug(true);
+        MimeMessage message = new MimeMessage(session);
+        // Quien envia el correo
+        message.setFrom(new InternetAddress("ajlucea@gmail.com"));
+        // A quien va dirigido
+        message.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
+        message.setSubject("asunto");
+       String texto="Bienvenido a EduCom, tus datos de acceso son:";
+       texto+="<br/>Usuario : "+destinatario;
+       texto+="<br/>Password :"+pass;
+        message.setText(texto, "ISO-8859-1", "html");
+
+        Transport t = session.getTransport("smtp");
+        t.connect("ajlucea@gmail.com", "kaqucahmamqpfgwq");
+//        kaqucahmamqpfgwq
+        t.sendMessage(message, message.getAllRecipients());
+        t.close();
+
+    }
 }

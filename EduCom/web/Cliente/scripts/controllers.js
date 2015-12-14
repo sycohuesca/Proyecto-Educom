@@ -7,6 +7,7 @@ angular.module('angularApp').controller('getGruposCtrl', getGrupos);
 angular.module('angularApp').controller('getMensajesCtrl', getMensajes);
 angular.module('angularApp').controller('getCentroCtrl', getCentro);
 angular.module('angularApp').controller('getUsuarioCtrl', getUsuario);
+angular.module('angularApp').controller('getUsuariosCtrl', getUsuarios);
 
 // Funciones
 function getGrupos($window, $timeout, usuarioService, miFactoria) {
@@ -213,7 +214,27 @@ function getMensajes($window, usuarioService, miFactoria) {
         return "El " + dia + "/" + mes + "/" + anio + " a las " + hora + ".";
     }
 }
-function getCentro($window, usuarioService, miFactoria) {
+function getCentro(usuarioService, miFactoria) {
+var model=this;
+var centro=miFactoria.usuario.idCentro;
+// Variables
+model.nombre=centro.nombre;
+model.direccion=centro.direccion;
+model.descripcion=centro.descripcion;
+
+model.guardar=guardar;
+
+function guardar(){
+miFactoria.usuario.idCentro.nombre=model.nombre;
+miFactoria.usuario.idCentro.direccion=model.direccion;
+miFactoria.usuario.idCentro.descripcion=model.descripcion;
+usuarioService.setCentro(miFactoria.usuario.idCentro).success(function(){
+    alert("Centro modificado.")
+     location.reload();
+});
+
+  
+}
 
 
 }
@@ -299,5 +320,41 @@ function getUsuario(usuarioService, miFactoria){
     } 
     }
     
+    
+}
+function getUsuarios($timeout, usuarioService, miFactoria){
+    var model=this;
+    // Variables
+    model.nombre="";
+    model.user="";
+    
+    usuarioService.getUsuariosByCentro(miFactoria.usuario.idCentro.idCentro).success(function (data){
+       model.usuariosSelect=data; 
+        
+    });
+    $timeout(function(){
+      $(".chosen-select").chosen();
+    },300);
+            
+  
+    // Funciones
+
+model.buscarLogin=function(){
+     usuarioService.getLogin(model.usuarioReset).success(function (data){
+        model.nombre=data.idUsuario.nombre;
+    model.user=data.user;
+    
+    }) 
+};
+model.reset=function(){
+   usuarioService.resetPassword(model.usuarioReset).success(function (){
+        alert("Contraseña reseteada y enviado un nuevo correo al usuario");
+   });
+}
+model.nuevo=function(){
+    
+}
+
+
     
 }

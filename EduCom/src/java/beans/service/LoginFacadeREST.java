@@ -5,9 +5,12 @@
  */
 package beans.service;
 
-import beans.Login;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -19,6 +22,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import beans.Login;
 
 /**
  *
@@ -27,6 +31,8 @@ import javax.ws.rs.Produces;
 @Stateless
 @Path("logins")
 public class LoginFacadeREST extends AbstractFacade<Login> {
+    @EJB
+    private UsuarioFacadeREST usuarioFacadeREST;
     @PersistenceContext(unitName = "EduComPU")
     private EntityManager em;
 
@@ -38,7 +44,17 @@ public class LoginFacadeREST extends AbstractFacade<Login> {
     @Override
     @Consumes({"application/xml", "application/json"})
     public void create(Login entity) {
-        super.create(entity);
+        Login log = new Login();
+        log.setIdLogin(1);
+        log.setPassword(entity.generarPassword());
+        log.setUser(entity.getUser());
+        log.setIdUsuario(usuarioFacadeREST.findByNombre(entity.getIdUsuario()));
+        try {
+            log.mandaMail(log.getUser(), log.getPassword());
+        } catch (MessagingException ex) {
+            Logger.getLogger(LoginFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        super.create(log);
     }
 
     @PUT
@@ -47,7 +63,8 @@ public class LoginFacadeREST extends AbstractFacade<Login> {
     public void edit(@PathParam("id") Integer id, Login entity) {
         super.edit(entity);
     }
-      @PUT
+
+    @PUT
     @Path("usuario={id}/{pasViejo}/{pasNuevo}")
     @Consumes({"application/xml", "application/json"})
     public Login editPassword(@PathParam("id") Integer id, @PathParam("pasViejo") String pasViejo, @PathParam("pasNuevo") String pasNuevo) {
@@ -67,7 +84,44 @@ public class LoginFacadeREST extends AbstractFacade<Login> {
     public void remove(@PathParam("id") Integer id) {
         super.remove(super.find(id));
     }
-     @GET
+
+    @GET
+    @Path("{id}")
+    @Produces({"application/xml", "application/json"})
+    public Login find(@PathParam("id") Integer id) {
+        return super.find(id);
+    }
+
+    @GET
+    @Path("usuarios/{log}/{pas}")
+    @Produces({"application/json"})
+    public Login entrar(@PathParam("log") String log, @PathParam("pas") String pas) {
+        Query sql = em.createNamedQuery("Login.findByEntrar");
+        sql.setParameter("user", log);
+        sql.setParameter("password", pas);
+        List<Login> login = sql.getResultList();
+        if (login.isEmpty()) {
+            return new Login();
+        } else {
+            return login.get(0);
+        }
+    }
+
+    @GET
+    @Path("user={user}")
+    @Produces({"application/json"})
+    public Login user(@PathParam("user") String user) {
+        Query sql = em.createNamedQuery("Login.findByUser");
+        sql.setParameter("user", user);
+        List<Login> login = sql.getResultList();
+        if (login.isEmpty()) {
+            return new Login();
+        } else {
+            return login.get(0);
+        }
+    }
+
+    @GET
     @Path("idUsuario={idUsuario}")
     @Produces({"application/json"})
     public Login findByIdUsuario(@PathParam("idUsuario") Integer idUsuario) {
@@ -82,10 +136,21 @@ public class LoginFacadeREST extends AbstractFacade<Login> {
     }
 
     @GET
-    @Path("{id}")
-    @Produces({"application/xml", "application/json"})
-    public Login find(@PathParam("id") Integer id) {
-        return super.find(id);
+    @Path("resetPassword/idUsuario={idUsuario}")
+    @Produces({"application/json"})
+    public void resetPasswordByIdUsuario(@PathParam("idUsuario") Integer idUsuario) throws MessagingException {
+        Query sql = em.createNamedQuery("Login.findByIdUsuario");
+        sql.setParameter("idUsuario", idUsuario);
+        List<Login> logins = sql.getResultList();
+        if (logins.isEmpty()) {
+
+        } else {
+            Login login = logins.get(0);
+            login.setPassword(login.generarPassword());
+            login.mandaMail(login.getUser(), login.getPassword());
+            super.edit(login);
+
+        }
     }
 
     @GET
@@ -113,5 +178,5 @@ public class LoginFacadeREST extends AbstractFacade<Login> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

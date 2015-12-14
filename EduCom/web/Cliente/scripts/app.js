@@ -36,16 +36,16 @@ angular
             .when('/grupos', {
                 templateUrl: 'views/administrar/grupos.html',
 
-            })
-            .when('/tipos', {
-                templateUrl: 'views/administrar/tipos.html',
-
-            })
-            .when('/usuarios', {
-                templateUrl: 'views/administrar/usuarios.html',
-
-            })
-            .when('/administrar', {
+                    })
+                    .when('/tipos', {
+                        templateUrl: 'views/administrar/tipos.html',
+                    })
+                    .when('/usuarios', {
+                        templateUrl: 'views/administrar/usuarios.html',
+                        controller: 'getUsuariosCtrl',
+                        controllerAs: 'usuarios'
+                    })
+                    .when('/administrar', {
                 templateUrl: 'views/usuariopanel.html',
             controller: 'getUsuarioCtrl',
                 controllerAs: 'usuario'
@@ -62,8 +62,7 @@ angular
                 accordion: false
             });
     };
-    })
-    
+    })    
     .service("usuarioService", function ($http) {
         var url="http://localhost:8080/EduCom/webresources/";
         this.getUsuario = function (id) {
@@ -117,6 +116,12 @@ angular
         }
               this.setPassword=function(idUsuario,viejo,nuevo){
             return  $http.put(url+"logins/usuario="+idUsuario + "/" + viejo + "/" + nuevo);
+        }
+              this.resetPassword=function(idUsuario){
+            return  $http.get(url+"logins/resetPassword/idUsuario="+idUsuario);
+        }
+               this.setCentro=function(centro){
+            return  $http.put(url+"centros/"+centro.idCentro,centro);
         }
      
        
