@@ -35,7 +35,8 @@ angular
             })
             .when('/grupos', {
                 templateUrl: 'views/administrar/grupos.html',
-
+               controller: 'getAdminGruposCtrl',
+                        controllerAs: 'adminGrupos'
                     })
                     .when('/tipos', {
                         templateUrl: 'views/administrar/tipos.html',
@@ -128,7 +129,7 @@ angular
     })
 
     .factory("miFactoria", function () {
-   
+ 
         return {
             usuario: "",
             miembrosUsuario:"",
@@ -136,8 +137,9 @@ angular
             grupoActivo: "",
             mensaje:"",
             tipo:""
-        }
+          
+        };
 
 
 
-    })
+    });

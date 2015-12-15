@@ -8,6 +8,7 @@ angular.module('angularApp').controller('getMensajesCtrl', getMensajes);
 angular.module('angularApp').controller('getCentroCtrl', getCentro);
 angular.module('angularApp').controller('getUsuarioCtrl', getUsuario);
 angular.module('angularApp').controller('getUsuariosCtrl', getUsuarios);
+angular.module('angularApp').controller('getAdminGruposCtrl', getAdminGrupos);
 
 // Funciones
 function getGrupos($window, $timeout, usuarioService, miFactoria) {
@@ -347,6 +348,7 @@ model.buscarLogin=function(){
     }) 
 };
 model.reset=function(){
+    alert("DSfsdf");
    usuarioService.resetPassword(model.usuarioReset).success(function (){
         alert("Contraseña reseteada y enviado un nuevo correo al usuario");
    });
@@ -357,4 +359,61 @@ model.nuevo=function(){
 
 
     
+}
+function getAdminGrupos ($timeout, usuarioService, miFactoria){
+   var model=this;
+   
+   // Variables
+   model.grupoActivo="";
+   model.nombre="";
+   model.descripcion="";
+   model.privado="0";
+     usuarioService.getGruposByCentro(miFactoria.usuario.idCentro.idCentro).success(function (data){
+       model.gruposSelect=data;      
+    });
+    usuarioService.getUsuariosByCentro(miFactoria.usuario.idCentro.idCentro).success(function (data){
+      model.usuariosSelect=data;  
+    });
+    $timeout(function(){
+      $(".chosen-select").chosen();
+    },300);
+            
+   // Funciones
+   model.guardar=guardar;
+   model.editGrupo=editGrupo;
+   model.activar=activar;
+   
+   function guardar (){
+    model.grupoActivo.nombre=model.nombre;
+   model.grupoActivo.descripcion=model.descripcion;
+   model.grupoActivo.privado=model.privado;
+   var miembro={grupo:model.grupoActivo,usuario:"",responsable:"0"};
+   if(model.usuariosActivos){
+       $.each(model.usuariosActivos, function (index){
+           miembro.usuario=model.usuariosActivos[index];
+           usuarioService.setMiembro(miembro).error(function(){
+              alert("error");
+          }) ;
+       });
+   }
+ usuarioService.editGrupo(model.grupoActivo).success(function(){
+     alert("Grupo Modificado y añadido sus miembros.");
+ });
+   };
+   function editGrupo (){
+   model.nombre=model.grupoActivo.nombre;
+   model.descripcion=model.grupoActivo.descripcion;
+   model.privado=model.grupoActivo.privado;
+  
+   
+ 
+   };
+    function activar (){
+     if(model.nombre){
+         return "active";
+     }
+     else {
+         return "";
+     }
+   };
 }
