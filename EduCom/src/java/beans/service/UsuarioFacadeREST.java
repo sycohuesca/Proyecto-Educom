@@ -38,6 +38,7 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     @Override
     @Consumes({"application/xml", "application/json"})
     public void create(Usuario entity) {
+           entity.setIdUsuario(1); 
         super.create(entity);
     }
       @POST
