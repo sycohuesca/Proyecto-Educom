@@ -86,7 +86,7 @@ $("#miForm").submit(function (e) {
                     alert("Usuario correcto. Hola " + data.idUsuario.nombre);
                     $.getJSON(url + "usuariotipousuario/usuario=" + data.idUsuario.idUsuario).done(function (data2) {
                         $("#tipo").val(data2[0].usuarioTipoUsuarioPK.idTipoUsuario);
-                        $("#miForm2").submit();
+                       document.cookie="username=John Smith; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
                     });
                 }
             }).fail(function () {

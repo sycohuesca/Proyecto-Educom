@@ -9,24 +9,30 @@
 'use strict';
 angular.module('angularApp').controller('getMenuLateralCtrl', getMenuLateral);
 
-function getMenuLateral($window, usuarioService, miFactoria) {
+function getMenuLateral($cookies, $window, usuarioService, miFactoria) {
     var model = this;
     model.nombre = "";
     model.centro = "";
-
-    usuarioService.getUsuario(9).success(function (data) {
-        miFactoria.usuario = data;
-        model.nombre = data.nombre;
-        model.centro = data.idCentro.nombre;
-        $window.location.href = "#/home ";
-//        usuarioService.getTipo(data.idUsuario).success(function (data){
-//            miFactoria.tipo=data[0].idTipo;
-
-//        });
-        // alert("Bienvenido " + data.nombre);
-
-    });
-
-
+    if ($cookies.get("idUsuario")) {
+        var idUsuario = $cookies.get("idUsuario");
+        usuarioService.getUsuario(idUsuario).success(function (data) {
+            miFactoria.usuario = data;
+            model.nombre = data.nombre;
+            model.centro = data.idCentro.nombre;
+            usuarioService.getTiposByUsuario(idUsuario).success(function (data) {
+                if ($.isEmptyObject(data)) {
+                    miFactoria.tipo = "5";
+                    $window.location.href = "#/home ";
+                }
+                else {
+                    miFactoria.tipo = data[0].idTipo;
+                    $window.location.href = "#/home ";
+                }
+            });
+        });
+    }
+    else {
+        $window.location.href = "../";
+    }
 
 }

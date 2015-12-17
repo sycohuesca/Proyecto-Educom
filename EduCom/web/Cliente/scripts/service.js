@@ -21,14 +21,14 @@ angular.module('angularApp').service("usuarioService", function ($http) {
             this.setUsuario = function (usuario) {
                 return  $http.put(url + "usuarios/" + usuario.idUsuario, usuario);
             };
+             this.setMiembro = function (miembro) {
+                return  $http.put(url + "miembros/miembrosPK;idUsuario=" + miembro.usuario.idUsuario + ";idGrupo=" + miembro.grupo.idGrupo, miembro);
+            };
             this.getGrupos = function (id) {
                 return $http.get(url + "miembros/usuario=" + id);
             };
             this.getGrupo = function (idGrupo) {
                 return  $http.get(url + "grupos/" + idGrupo);
-            };
-            this.setMiembro = function (miembro) {
-                return  $http.put(url + "miembros/miembrosPK;idUsuario=" + miembro.usuario.idUsuario + ";idGrupo=" + miembro.grupo.idGrupo, miembro);
             };
             this.newGrupo = function (grupo) {
                 return  $http.post(url + "grupos", grupo);
@@ -55,7 +55,7 @@ angular.module('angularApp').service("usuarioService", function ($http) {
                 return  $http.delete(url + "mensajes/" + idMensaje);
             };
             this.getTiposByUsuario = function (idUsuario) {
-                return  $http.get(url + "miembros/miembroPK;idUsuario=" + idUsuario + ";idGrupo=" + idGrupo);
+                return  $http.get(url + "usuariotipousuario/usuario=" + idUsuario);
             };
             this.newTipo = function (tipo) {
                 return $http.post(url + "tipousuarios", tipo);

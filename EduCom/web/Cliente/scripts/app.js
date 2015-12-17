@@ -2,8 +2,6 @@
 
 'use strict';
 $(".button-collapse").sideNav();
-var idUsuario = 9;
-
 
 /**
  * @ngdoc overview
