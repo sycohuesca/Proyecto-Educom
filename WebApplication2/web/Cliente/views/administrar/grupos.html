@@ -1,0 +1,56 @@
+<br>  
+<a href="#/home" class="btn-floating btn-large waves-effect waves-light tooltipped" data-position="bottom"  data-tooltip="Regresar"><i class="material-icons"> fast_rewind</i></a> 
+  <div class="card-panel">
+
+      <form ng-submit="adminGrupos.guardar()" class="container">
+                    <blockquote>
+                        Aquí podrás editar  los grupos creados en el centro y añadir miembros.
+                    </blockquote>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col  s12 m8 l6">
+                                <label for="gruposSelect">
+                                    Escoge el grupo a modificar.</label>
+                                <select ng-model="adminGrupos.grupoActivo" ng-options="grupo as grupo.nombre for grupo in adminGrupos.gruposSelect" ng-change="adminGrupos.editGrupo()" class="chosen-select browser-default" required>
+                                    <option value="">Escoge el grupo a modificar...
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col l12">
+                                <label ng-class="adminGrupos.activar()" >Nombre del Grupo</label>
+                                <input ng-model="adminGrupos.nombre" type="text" required>
+                            </div>
+                            <div class="input-field col l12">   
+                                <label ng-class="adminGrupos.activar()" >Descripción del Grupo</label>
+                                <textarea ng-model="adminGrupos.descripcion" class="materialize-textarea" required ></textarea>
+                            </div>
+                            <p>
+
+                                <input class="with-gap" ng-model="adminGrupos.privado" type="radio" id="privadoA" value="1"/>
+                                <label for="privadoA">Privado</label>
+                                <input class="with-gap" ng-model="adminGrupos.privado" name="privadoCheckA" type="radio" id="publicoA" value="0"/>
+                                <label for="publicoA">Público</label>
+                            </p>
+                          
+                        </div>
+                        <div class="row">
+                            <div class="col  s12 m8 l6">
+                                <label>
+                                    Escoge a los usuarios </label>
+                                <select data-placeholder="Escoge a los usuarios..." ng-model="adminGrupos.usuariosActivos" ng-options="user as user.nombre for user in adminGrupos.usuariosSelect"  multiple class="chosen-select browser-default">
+                                  
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="center-align input-field col l12">
+                                <button class="center btn waves-effect waves-light" type="submit">Guardar
+                                    <i class="material-icons right">reorder</i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>   
+                </form>
+            </div>

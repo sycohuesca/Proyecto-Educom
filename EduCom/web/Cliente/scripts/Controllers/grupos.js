@@ -85,7 +85,7 @@ function getGrupos($window, $timeout, usuarioService, miFactoria) {
     }
     function guardarMiembro() {
         var miembro = {};
-        miembro.usuario = {idUsuario: model.miembro.usuario};
+        miembro.usuario =  model.miembro.usuario;
         miembro.grupo = miFactoria.grupoActivo;
         miembro.responsable = model.miembro.responsable;
         usuarioService.setMiembro(miembro).success(function () {
@@ -121,12 +121,10 @@ function getGrupos($window, $timeout, usuarioService, miFactoria) {
             });
         }
     }
-    function verMensajes(grupo) {
-        miFactoria.grupoActivo = grupo;
+    function verMensajes(miembro) {
+        miFactoria.grupoActivo = miembro.grupo;
+        miFactoria.responsable =miembro.responsable;
         $window.location.href = "#/mensajes";
     }
-    function verMensajes(grupo) {
-        miFactoria.grupoActivo = grupo;
-        $window.location.href = "#/mensajes";
-    }
+  
 }

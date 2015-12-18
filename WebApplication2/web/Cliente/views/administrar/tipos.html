@@ -1,0 +1,37 @@
+<br>
+<a href="#/home" class="btn-floating btn-large waves-effect waves-light tooltipped" data-position="bottom" data-tooltip="Regresar"><i class="material-icons"> fast_rewind</i></a>
+<div class="card-panel ">
+    <div class="container">
+        <blockquote>Inserta un tipo nuevo de usuario directamente rellenando los datos y pulsando nuevo o busca un tipo existente para añadir a usuarios.</blockquote>
+        <div class="row ">
+            <div class="input-field col s12 m8 ">
+                <input id="tipoNombre" ng-model="tipos.nombre" type="text">
+                <label for="tipoNombre">Tipo de Usuario</label>
+            </div>
+        </div>
+        <div class="center-align">
+            <a ng-click="tipos.nuevoTipo()" class="waves-effect waves-light btn"><i class="material-icons right">add</i>Nuevo</a>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col  s12 m6">
+                <label>Escoge el tipo de usuario correspondiente</label>
+                <select ng-model="tipos.tipoSelect" ng-options="tipo as tipo.nombre for tipo in tipos.tipos" class="chosen-select browser-default">
+                    <option value="">Escoge El tipo de usuario...</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col  s12 m10 l10">
+                <label>
+                    Escoge el tipo de usuario</label>
+                <select ng-model="tipos.usuariosSelect" ng-options="usuario.idUsuario as usuario.nombre for usuario in tipos.usuarios" data-placeholder="Escoge a los usuarios" multiple class="chosen-select browser-default">
+                </select>
+            </div>
+        </div>
+        <div class="center-align">
+            <a ng-click="tipos.guardar()" class="waves-effect waves-light btn"><i class="material-icons right">send</i>Guardar</a>
+        </div>
+
+    </div>
+</div>

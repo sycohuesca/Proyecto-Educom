@@ -1,6 +1,6 @@
 <br/>
 
-<a ng-click="grupos.modalNuevoGrupo()" class="btn-floating btn-large waves-effect waves-light tooltipped" data-position="bottom" data-tooltip="Nuevo Grupo"><i class="material-icons">add</i></a>
+<a ng-show="menu.tipo <=2? true:false" ng-click="grupos.modalNuevoGrupo()" class="btn-floating btn-large waves-effect waves-light tooltipped" data-position="bottom" data-tooltip="Nuevo Grupo"><i class="material-icons">add</i></a>
 <a ng-click="grupos.modalEntrarGrupo()" class="btn-floating btn-large waves-effect waves-light tooltipped" data-position="bottom" data-tooltip="Entrar en Grupo"><i class="material-icons">input</i></a>
 
 <div ng-repeat="grupo in grupos.grupos" class="card small">
@@ -16,7 +16,7 @@
             <a ng-click="grupos.modalEditarMiembros(grupo.grupo)" class='btn-floating btn-medium waves-effect waves-light modal-trigger tooltipped' data-position='bottom' data-tooltip='Editar Miembros'><i class='material-icons'>recent_actors</i></a>
             <a ng-click="grupos.modalEditarGrupo(grupo.grupo)" class='btn-floating btn-medium waves-effect waves-light  tooltipped' data-position='bottom' data-tooltip='Editar Grupo'><i class='material-icons'>reorder</i></a>
         </span>
-        <a ng-click="grupos.verMensajes(grupo.grupo)" class='btn-floating btn-medium waves-effect waves-light tooltipped' data-position='bottom' data-tooltip='Ver Mensajes'><i class='material-icons'>question_answer</i></a>
+        <a ng-click="grupos.verMensajes(grupo)" class='btn-floating btn-medium waves-effect waves-light tooltipped' data-position='bottom' data-tooltip='Ver Mensajes'><i class='material-icons'>question_answer</i></a>
     </div>
     <div class="card-reveal">
         <span class='card-title grey-text text-darken-4'><i class='material-icons left'>comment</i>{{grupo.grupo.nombre}}
@@ -72,8 +72,8 @@
             <div class="row">
                 <p>
                     <label class="active" for="usuarioCentro">Escoge a los usuarios que quieres agregar:</label>
-                    <select data-placeholder="Eligue un Usuario..." ng-model="grupos.miembro.usuario" class="chosen-select browser-default" id="usuarioCentro" required>
-                        <option ng-repeat="usuario in grupos.usuariosSelect" ng-value="usuario.idUsuario">{{usuario.nombre}}</option>
+                    <select ng-options="usuario as usuario.nombre for usuario in grupos.usuariosSelect" ng-model="grupos.miembro.usuario" class="chosen-select browser-default" id="usuarioCentro" required>
+                        <option value="">Elige un Usuario...</option>
                     </select>
                 </p>
                 <p>Quieres que sea Responsable? </p>
@@ -104,22 +104,21 @@
     <div class="modal-content">
         <h4>Entrar Grupo</h4>
         <div class="divider"></div>
-        <div class="container">
+        <form ng-submit="grupos.btnEntrarGrupo()" class="container">
             <div class="row">
                 <p>
                     <label class="active">Nombre del Grupo</label>
-                    <select data-placeholder="Eligue un Grupo..." ng-model="grupos.grupoEntrarSelect" class="browser-default chosen-select" >
-                        <option ng-repeat="grupo in grupos.entrar" ng-value="grupo.idGrupo" mi-select>{{grupo.nombre}}</option>
-                        
+                    <select  ng-options="grupo.idGrupo as grupo.nombre for grupo in grupos.entrar" ng-model="grupos.grupoEntrarSelect" class="browser-default chosen-select" >
+                        <option value="">Elige un Grupo...</option>                        
                     </select>
                 </p>
             </div>
             <div class="row center-align">
-                <button ng-click="grupos.btnEntrarGrupo()" class="btn waves-effect waves-light">entrar
+                <button  class="btn waves-effect waves-light">entrar
                     <i class="material-icons right">send</i>
                 </button>
             </div>
-        </div>
+        </form>
     </div>
     <div class="modal-footer">
         <a class=" modal-action modal-close waves-effect waves-green btn-flat">Cerrar</a>
