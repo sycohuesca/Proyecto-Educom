@@ -8,61 +8,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
         <title>EduCom</title>
 
-
-
-        <!-- CSS  -->
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link href="Cliente/styles/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection" />
-        <link href="Cliente/styles/login.css" type="text/css" rel="stylesheet" media="screen,projection" />
-
     </head>
 
-    <body ng-app="login" ng-controller="loginCtrl as login">
-        <div class="row">
-            <div class="col s10 m6 l4 offset-s1 offset-m3 offset-l4">
-                <form ng-submit="login.enviar()">
-                    <div id="loginpanel" class="card-panel center-align">
-
-                        <div class="container">
-                            <h5>Login:</h5>
-                            <div class="row">
-                              
-
-                                <div class="input-field col s12">
-                                    <input ng-model="login.nombre" id="nombreCrear" type="text" required/>
-                                    <label ng-class="login.activar()"  for="nombreCrear"> Usuario:</label>
-                                </div>
-
-                                <div class="limpi input-field col s12">
-                                    <input ng-model="login.pass" id="passwordCrear" type="password" required/>
-                                    <label ng-class="login.activar()" for="passwordCrear" >Password:</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col l12">
-                                    <button class="btn waves-effect waves-light" type="submit">Enviar
-                                        <i class="material-icons right">send</i>
-                                    </button><div>
-                                        <p></p></div>
-                                    <div id="renderMe"></div>  
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-        </div>
-
-        <!--fin container-->
-
-
-        <!--  Scripts-->
-        <script src="Cliente/scripts/jquery.min.js"></script>
-        <script src="Cliente/scripts/materialize.min.js"></script>
-        <script src="https://apis.google.com/js/client:platform.js"></script>
-        <script src="Cliente/scripts/angular.min.js" type="text/javascript"></script>
-        <script src="Cliente/scripts/angular-cookies.min.js" type="text/javascript"></script>
-        <script src="Cliente/scripts/Controllers/login.js" type="text/javascript"></script>
+    <body>
+        <h3>Servidor corriendo en http://192.168.1.131:8080</h3>
     </body>
 </html>
